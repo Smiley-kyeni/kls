@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyeni Luxe Studio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background: #6a0dad; /* Luxe Purple */
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero */
+    .hero {
+      height: 70vh;
+      background: linear-gradient(rgba(106,13,173,0.6), rgba(106,13,173,0.6)), 
+        url(KLS.jpg) center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      max-width: 600px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+    h2 {
+      color: #6a0dad;
+      margin-bottom: 20px;
+    }
+
+    /* Services Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+      transition: transform 0.18s, box-shadow 0.18s;
+      background: #fff;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      height: 160px;
+      object-fit: cover;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+      color: #6a0dad;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* Contact */
+    .contact {
+      background: #f9f4fc;
+      padding: 40px 20px;
+    }
+    .socials a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #6a0dad;
+      font-weight: bold;
+    }
+    .socials a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      background: #6a0dad;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    /* Appointment Form */
+    .appointment-form {
+      max-width: 450px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9f9;
+      text-align: left;
+    }
+
+    .appointment-form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #6a0dad;
+    }
+
+    .appointment-form input,
+    .appointment-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .appointment-form button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      background: #6a0dad;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .appointment-form button:hover {
+      background: #4b0082;
+    }
+
+    /* Modal / Lightbox */
+    .modal {
+      display: none; /* hidden by default */
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid #eee;
+      background: linear-gradient(90deg, #6a0dad, #8b3bd6);
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 18px;
+      background: #faf8ff;
+    }
+
+    .slides-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .slide img {
+      max-width: 100%;
+      max-height: 65vh;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    .caption {
+      margin-top: 12px;
+      font-style: italic;
+      color: #444;
+    }
+
+    .modal-controls {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .control {
+      pointer-events: all;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      font-size: 22px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 0 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .close-btn {
+      background: rgba(255,255,255,0.95);
+      color: #6a0dad;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .dots {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      height: 10px;
+      width: 10px;
+      background: #ddd;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #6a0dad;
+      box-shadow: 0 0 6px rgba(106,13,173,0.3);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 700px) {
+      .card img { height: 140px; }
+      .modal-header { padding: 10px 12px; }
+      .modal-body { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo"><strong>Kyeni Luxe Studio</strong></div>
+    <div class="menu">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#appointment">Book Appointment</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>Kyeni Luxe Studio</h1>
+    <p>Because beauty is more than makeup. It’s confidence, grace, and love.💜 We ensure our brand loves your inner self and your outer self.</p>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="grid">
+      <!-- Nails -->
+      <div class="card" data-service="nails">
+      <img src="nails5.jpg" alt="Nails">
+        <h3>Nails & Extensions</h3>
+        <p>Trendy, classy, and bold nail designs to match your vibe. Click to view portfolio.</p>
+      </div>
+
+      <!-- Makeup -->
+      <div class="card" data-service="makeup">
+        <img src="image9.jpg" alt="Makeup">
+        <h3>Makeup Glam</h3>
+        <p>From natural glow to full glam makeup that speaks YOU. Click to view portfolio.</p>
+      </div>
+
+      <!-- Hair -->
+      <div class="card" data-service="hair">
+        <img src="hair1.jpg" alt="Hair">
+        <h3>Hair Styling</h3>
+        <p>Modern styles, treatments, and care to crown your beauty. Click to view portfolio.</p>
+      </div>
+
+      <!-- Bridal -->
+      <div class="card" data-service="bridal">
+        <img src="makeup6.jpg" alt="Bridal">
+        <h3>Bridal Packages</h3>
+        <p>Special nails, makeup & hair for your big day — flawless & unforgettable. Click to view portfolio.</p>
+      </div>
+
+      <!-- Piercing -->
+      <div class="card" data-service="piercing">
+        <img src="piercing1.jpg" alt="Piercing">
+        <h3>Piercing</h3>
+        <p>Safe, stylish piercings — ear, nose, cartilage. Click to view portfolio.</p>
+      </div>
+
+      <!-- Massage -->
+      <div class="card" data-service="massage">
+        <img src="massage2.jpg" alt="Massage">
+        <h3>Massage</h3>
+        <p>Relax and rejuvenate with soothing massage treatments. Click to view portfolio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modals (one per service) -->
+  <!-- Nails Modal -->
+  <div id="modal-nails" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-nails-title">
+      <div class="modal-header">
+        <div id="modal-nails-title"><strong>Nails & Extensions — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-nails">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="nails">
+          <div class="slide">
+            <img src="nails6.jpg" alt="Nail 1">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="nails7.jpg" alt="Nail 2">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="nails3.jpg" alt="Nail 3">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="nails4.jpg" alt="Nail 4">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="nails9.jpg" alt="Nail 5">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="nails1.jpg" alt="Nail 6">
+            <div class="caption">Nail art by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="nails">❮</button>
+            <button class="control next" data-next="nails">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="nails"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Makeup Modal -->
+  <div id="modal-makeup" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-makeup-title">
+      <div class="modal-header">
+        <div id="modal-makeup-title"><strong>Makeup Glam — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-makeup">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="makeup">
+          <div class="slide">
+            <img src="image1.jpg" alt="Makeup 1">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image2.jpg" alt="Makeup 2">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image3.jpg" alt="Makeup 3">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image4.jpg" alt="Makeup 4">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image5.jpg" alt="Makeup 5">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image6.jpg" alt="Makeup 6">
+            <div class="caption">Makeup by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="makeup">❮</button>
+            <button class="control next" data-next="makeup">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="makeup"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hair Modal -->
+  <div id="modal-hair" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-hair-title">
+      <div class="modal-header">
+        <div id="modal-hair-title"><strong>Hair Styling — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-hair">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="hair">
+          <div class="slide">
+            <img src="image7.jpg" alt="Hair 1">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="hair2.jpg" alt="Hair 2">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="hair3.jpg" alt="Hair 3">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="hair4.jpg" alt="Hair 4">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="hair5.jpg" alt="Hair 5">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="image8.jpg" alt="Hair 6">
+            <div class="caption">Hair styling by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="hair">❮</button>
+            <button class="control next" data-next="hair">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="hair"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bridal Modal -->
+  <div id="modal-bridal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-bridal-title">
+      <div class="modal-header">
+        <div id="modal-bridal-title"><strong>Bridal Packages — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-bridal">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="bridal">
+          <div class="slide">
+            <img src="makeup1.jpg" alt="Bridal 1">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="makeup2.jpg" alt="Bridal 2">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="makeup3.jpg" alt="Bridal 3">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="makeup4.jpg" alt="Bridal 4">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="makeup5.jpg" alt="Bridal 5">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="makeup7.jpg" alt="Bridal 6">
+            <div class="caption">Bridal look by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="bridal">❮</button>
+            <button class="control next" data-next="bridal">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="bridal"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Piercing Modal -->
+  <div id="modal-piercing" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-piercing-title">
+      <div class="modal-header">
+        <div id="modal-piercing-title"><strong>Piercing — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-piercing">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="piercing">
+          <div class="slide">
+            <img src="piercing2.jpg" alt="Piercing 1">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="piercing3.jpg" alt="Piercing 2">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="piercing4.jpg" alt="Piercing 3">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="piercing5.jpg" alt="Piercing 4">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="piercing6.jpg" alt="Piercing 5">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="piercing7.jpg" alt="Piercing 6">
+            <div class="caption">Piercing by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="piercing">❮</button>
+            <button class="control next" data-next="piercing">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="piercing"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Massage Modal -->
+  <div id="modal-massage" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-massage-title">
+      <div class="modal-header">
+        <div id="modal-massage-title"><strong>Massage — Portfolio</strong></div>
+        <button class="close-btn" data-close="modal-massage">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="slides-wrapper" data-service="massage">
+          <div class="slide">
+            <img src="massage1.jpg" alt="Massage 1">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="massage3.jpg" alt="Massage 2">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="massage4.jpg" alt="Massage 3">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="massage6.jpg" alt="Massage 4">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="massage5.jpg" alt="Massage 5">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="slide">
+            <img src="massage7.jpg" alt="Massage 6">
+            <div class="caption">Massage by Kyeni Luxe Studio</div>
+          </div>
+          <div class="modal-controls">
+            <button class="control prev" data-prev="massage">❮</button>
+            <button class="control next" data-next="massage">❯</button>
+          </div>
+        </div>
+        <div class="dots" data-dots-for="massage"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>At <strong>Kyeni Luxe Studio, We believe every girl is already beautiful.</strong>  
+      My mission is simple: <strong>To make you feel pretty with or without makeup.</strong>  
+      We’re here to enhance your confidence, celebrate your uniqueness, and sprinkle love in every brush stroke, every nail design, every style.💜</p>
+  </section>
+
+  <!-- Appointment -->
+  <section id="appointment">
+    <h2>Book an Appointment</h2>
+    <form action="appointment.php" method="POST" class="appointment-form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="date">Preferred Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Preferred Time</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="message">Additional Notes</label>
+      <textarea id="message" name="message"></textarea>
+
+      <button type="submit">Book Now</button>
+    </form>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>📞 Phone: <a href="tel:0708721389">0708721389</a></p>
+    <div class="socials">
+      <p>Follow us on:</p>
+      <a href="https://instagram.com/kyeni_luxe_studio" target="_blank">Instagram</a> | 
+      <a href="https://tiktok.com/@kyeni._" target="_blank">TikTok</a> |
+      <a href="https://wa.me/254708721389" target="_blank">WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Kyeni Luxe Studio. Built with love and passion for your nails, hair and skin.💜</p>
+  </footer>
+
+  <!-- Scripts: handle opening modals, slides, dots, and keyboard nav -->
+  <script>
+    // Map service -> modal id
+    const serviceModalMap = {
+      nails: 'modal-nails',
+      makeup: 'modal-makeup',
+      hair: 'modal-hair',
+      bridal: 'modal-bridal',
+      piercing: 'modal-piercing',
+      massage: 'modal-massage'
+    };
+
+    // Open modal when clicking a card
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const svc = card.getAttribute('data-service');
+        const mid = serviceModalMap[svc];
+        if (!mid) return;
+        openModal(mid);
+      });
+    });
+
+    // Open modal function
+    function openModal(modalId) {
+      // close any open modal first
+      document.querySelectorAll('.modal').forEach(m => {
+        m.style.display = 'none';
+        m.setAttribute('aria-hidden', 'true');
+      });
+
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+
+      // initialize its slideshow
+      initSlides(modal);
+      // focus for accessibility
+      modal.querySelector('.close-btn').focus();
+    }
+
+    // Close modal via close buttons
+    document.querySelectorAll('.close-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = btn.getAttribute('data-close');
+        closeModal(target);
+      });
+    });
+
+    // Close on overlay click (but not when clicking inside modal-content)
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    });
+
+    // Close modal helper
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Slides handling
+    const slideState = {}; // keep track of current index per service
+
+    function initSlides(modal) {
+      // find service key from slides-wrapper data attribute
+      const wrapper = modal.querySelector('.slides-wrapper');
+      if (!wrapper) return;
+      const service = wrapper.getAttribute('data-service');
+      const slides = wrapper.querySelectorAll('.slide');
+      const dotsContainer = modal.querySelector('.dots');
+      // initialize state
+      if (!slideState[service]) slideState[service] = 0;
+
+      // build dots
+      dotsContainer.innerHTML = '';
+      slides.forEach((s, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (i === slideState[service] ? ' active' : '');
+        dot.addEventListener('click', () => {
+          slideState[service] = i;
+          showSlide(service, modal);
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      // attach prev/next controls in this modal
+      modal.querySelectorAll('.prev').forEach(btn => {
+        if (btn.getAttribute('data-prev') === service) {
+          btn.onclick = () => { changeSlide(service, -1, modal); };
+        }
+      });
+      modal.querySelectorAll('.next').forEach(btn => {
+        if (btn.getAttribute('data-next') === service) {
+          btn.onclick = () => { changeSlide(service, 1, modal); };
+        }
+      });
+
+      // show initial slide
+      showSlide(service, modal);
+    }
+
+    function showSlide(service, modal) {
+      const wrapper = modal.querySelector('.slides-wrapper');
+      const slides = wrapper.querySelectorAll('.slide');
+      const dots = modal.querySelectorAll('.dot');
+      slides.forEach((s, idx) => {
+        s.style.display = (idx === slideState[service]) ? 'block' : 'none';
+      });
+      dots.forEach((d, idx) => {
+        if (idx === slideState[service]) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
+
+    function changeSlide(service, delta, modal) {
+      const wrapper = modal.querySelector('.slides-wrapper');
+      const slides = wrapper.querySelectorAll('.slide');
+      slideState[service] = (slideState[service] + delta + slides.length) % slides.length;
+      showSlide(service, modal);
+    }
+
+    // Keyboard navigation: Esc to close, arrow left/right to navigate
+    document.addEventListener('keydown', (e) => {
+      // find open modal
+      const openModal = Array.from(document.querySelectorAll('.modal')).find(m => m.style.display === 'flex');
+      if (!openModal) return;
+      const wrapper = openModal.querySelector('.slides-wrapper');
+      if (!wrapper) return;
+      const service = wrapper.getAttribute('data-service');
+
+      if (e.key === 'Escape') {
+        openModal.style.display = 'none';
+        openModal.setAttribute('aria-hidden', 'true');
+      } else if (e.key === 'ArrowRight') {
+        changeSlide(service, 1, openModal);
+      } else if (e.key === 'ArrowLeft') {
+        changeSlide(service, -1, openModal);
+      }
+    });
+  </script>
+</body>
+</html>
